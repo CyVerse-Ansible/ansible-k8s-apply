@@ -1,0 +1,6 @@
+IS_HTTP: true
+
+# These are basic setups for testing as the ui does not yet exist
+## Deployments
+#K8S_RESOURCE: "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: nginx-deployment\n  labels:\n    app: nginx\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: nginx\n  template:\n    metadata:\n      labels:\n        app: nginx\n    spec:\n      containers:\n      - name: nginx\n        image: nginx:1.14.2\n        ports:\n        - containerPort: 80"
+#K3S_PORTS: ["port1:80","nginx:8080","port:443"]

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+  - http:
+      paths:
+{% for PORT in K3S_PORTS %}
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ PORT.split(":")[0] }}
+            port:
+              number: {{ PORT.split(":")[1] }}
+{% endfor %}

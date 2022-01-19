@@ -1,0 +1,19 @@
+- name: SHELL; install appy yaml file
+  shell:
+    cmd:  kubectl apply -f {{ K8S_RESOURCE }}
+  when: IS_HTTP|bool
+
+- name: SHELL; install appy yaml file
+  shell:
+    executable: /bin/bash
+    cmd:  echo -e "{{ K8S_RESOURCE }}" | kubectl apply -f -
+  when: not IS_HTTP|bool
+
+- name: TEMPLATE; create yaml ingress file for k8s apply
+  template:
+    src: "depingress.yaml.j2"
+    dest: "depingress.yaml"
+
+- name: SHELL; install appy yaml ingress file
+  shell:
+    cmd:  kubectl apply -f depingress.yaml
