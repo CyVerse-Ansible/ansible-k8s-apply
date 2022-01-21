@@ -18,7 +18,8 @@ Variable Name | Default value if not defined | Description
 ------------- | ---------------------- | -----------
 K8S_RESOURCE  | None | a required variable that is the .yaml file you want applied or an http address to one.
 IS_HTTP       | true | indecates that you are using a http link to a yaml file. set to false to use a string of a full file.
-K3S_PORTS     | None | a required variable that is a list of "port_service_name:port_numbers" such as ["port_service1:80","port_service2:8080"] which will be used in the ingress
+K3S_PORTS     | None | a required variable that is a list of "port-service-name:port_numbers" such as ["port-servicea:80","port-serviceb:8080"] which will be used in the ingress
+
 Example Playbook
 ----------------
 
@@ -31,7 +32,7 @@ This is a sample playbook:
   vars:
     IS_HTTP: false
     K8S_RESOURCE: "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: nginx-deployment\n  labels:\n    app: nginx\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: nginx\n  template:\n    metadata:\n      labels:\n        app: nginx\n    spec:\n      containers:\n      - name: nginx\n        image: nginx:1.14.2\n        ports:\n        - containerPort: 80"
-    K3S_PORTS: ["port_service1:80","port_service2:8080"]
+    K3S_PORTS: ["port-servicea:80","port-serviceb:8080"]
 ````
 
 Author Information
