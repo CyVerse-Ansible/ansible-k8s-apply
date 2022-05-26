@@ -9,11 +9,15 @@
     cmd:  echo -e "{{ K8S_RESOURCE }}" | kubectl apply -f -
   when: not IS_HTTP|bool
 
-- name: TEMPLATE; create yaml ingress file for k8s apply
-  template:
-    src: "depingress.yaml.j2"
-    dest: "depingress.yaml"
+- name: Install, configure, and start Apache
+  block:
+    - name: TEMPLATE; create yaml ingress file for k8s apply
+      template:
+        src: "depingress.yaml.j2"
+        dest: "depingress.yaml"
 
-- name: SHELL; install appy yaml ingress file
-  shell:
-    cmd:  kubectl apply -f depingress.yaml
+    - name: SHELL; install appy yaml ingress file
+      shell:
+        cmd:  kubectl apply -f depingress.yaml
+
+  when: K3S_PORTS is defined
