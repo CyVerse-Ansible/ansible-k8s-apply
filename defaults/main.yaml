@@ -1,4 +1,5 @@
 IS_HTTP: true
+IS_BASE64: false
 
 # These are basic setups for testing as the ui does not yet exist
 ## Deployments

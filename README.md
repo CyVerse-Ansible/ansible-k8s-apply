@@ -17,7 +17,8 @@ The following table lists optional ansible variables along with the default valu
 Variable Name | Default value if not defined | Description
 ------------- | ---------------------- | -----------
 K8S_RESOURCE  | None | a required variable that is the .yaml file you want applied or an http address to one.
-IS_HTTP       | true | indecates that you are using a http link to a yaml file. set to false to use a string of a full file.
+IS_HTTP       | true | indicates that you are using a http link to a yaml file. set to false to use a string of a full file.
+IS_BASE64     | false | indicates that you are using a base64 version of a file string. set to false to use a normal string.
 K3S_PORTS     | None | a required variable that is a list of "port-service-name:port_numbers" such as ["port-servicea:80","port-serviceb:8080"] which will be used in the ingress
 
 Example Playbook
