@@ -1,7 +1,12 @@
 - name: SHELL; install appy yaml file from http link
   shell:
     cmd:  kubectl apply -f {{ K8S_RESOURCE }}
-  when: IS_HTTP|bool
+  when: IS_HTTP|bool and not IS_BASE64|bool
+
+- name: SHELL; install appy yaml file from base64 http link
+  shell:
+    cmd:  kubectl apply -f {{ K8S_RESOURCE | b64decode }}
+  when: IS_HTTP|bool and IS_BASE64|bool
 
 - name: SHELL; install appy  string yaml file
   shell:
