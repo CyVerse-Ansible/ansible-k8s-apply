@@ -31,4 +31,4 @@
       shell:
         cmd:  kubectl apply -f depingress.yaml
 
-  when: K3S_PORTS is defined
+  when: K3S_PORTS is defined and K3S_PORTS|length > 0
