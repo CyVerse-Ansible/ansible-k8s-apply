@@ -14,7 +14,7 @@
     cmd:  echo -e "{{ K8S_RESOURCE }}" | kubectl apply -f -
   when: not IS_HTTP|bool and not IS_BASE64|bool
 
-- name: SHELL; install appy bse64 yaml file
+- name: SHELL; install appy base64 yaml file
   shell:
     executable: /bin/bash
     cmd:  echo -e "{{ K8S_RESOURCE | b64decode }}" | kubectl apply -f -
