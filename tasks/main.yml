@@ -8,18 +8,10 @@
     k8s_resource_list: []
   when:  K8S_RESOURCE is string
 
-- name: Print the k8s_resource_list
-  debug:
-    msg: "{{ k8s_resource_list }}"
-
 - name: convert K8S_RESOURCE to list if needed
   ansible.builtin.set_fact:
     k8s_resource_list: "{{ k8s_resource_list + [K8S_RESOURCE] }}"
   when:  K8S_RESOURCE is string
-
-- name: Print the k8s_resource_list
-  debug:
-    msg: "{{ k8s_resource_list }}"
 
 - include_tasks: apply.yml
   loop: "{{ k8s_resource_list }}"
