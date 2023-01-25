@@ -1,0 +1,21 @@
+- name: SHELL; install appy yaml file from http link
+  shell:
+    cmd:  kubectl apply -f {{ item }}
+  when: IS_HTTP|bool and not IS_BASE64|bool
+
+- name: SHELL; install appy yaml file from base64 http link
+  shell:
+    cmd:  kubectl apply -f {{ item | b64decode }}
+  when: IS_HTTP|bool and IS_BASE64|bool
+
+- name: SHELL; install appy  string yaml file
+  shell:
+    executable: /bin/bash
+    cmd:  echo -e "{{ item }}" | kubectl apply -f -
+  when: not IS_HTTP|bool and not IS_BASE64|bool
+
+- name: SHELL; install appy base64 yaml file
+  shell:
+    executable: /bin/bash
+    cmd:  echo -e "{{ item | b64decode }}" | kubectl apply -f -
+  when: not IS_HTTP|bool and IS_BASE64|bool
