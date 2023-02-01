@@ -1,24 +1,20 @@
-- name: SHELL; install appy yaml file from http link
-  shell:
-    cmd:  kubectl apply -f {{ K8S_RESOURCE }}
-  when: IS_HTTP|bool and not IS_BASE64|bool
+- name: set K8S_RESOURCE to correct var
+  ansible.builtin.set_fact:
+    k8s_resource_list: "{{ K8S_RESOURCE }}"
+  when:  K8S_RESOURCE is not string
 
-- name: SHELL; install appy yaml file from base64 http link
-  shell:
-    cmd:  kubectl apply -f {{ K8S_RESOURCE | b64decode }}
-  when: IS_HTTP|bool and IS_BASE64|bool
+- name: convert K8S_RESOURCE to list if needed
+  ansible.builtin.set_fact:
+    k8s_resource_list: []
+  when:  K8S_RESOURCE is string
 
-- name: SHELL; install appy  string yaml file
-  shell:
-    executable: /bin/bash
-    cmd:  echo -e "{{ K8S_RESOURCE }}" | kubectl apply -f -
-  when: not IS_HTTP|bool and not IS_BASE64|bool
+- name: convert K8S_RESOURCE to list if needed
+  ansible.builtin.set_fact:
+    k8s_resource_list: "{{ k8s_resource_list + [K8S_RESOURCE] }}"
+  when:  K8S_RESOURCE is string
 
-- name: SHELL; install appy base64 yaml file
-  shell:
-    executable: /bin/bash
-    cmd:  echo -e "{{ K8S_RESOURCE | b64decode }}" | kubectl apply -f -
-  when: not IS_HTTP|bool and IS_BASE64|bool
+- include_tasks: apply.yml
+  loop: "{{ k8s_resource_list }}"
 
 - name: Install, configure, and start Apache
   block:
